@@ -1,0 +1,16 @@
+{
+  "name": "ringformemories",
+  "version": "1.0.0",
+  "description": "Ring for Memories - Audio Guestbook for Weddings",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "resend": "^6.9.4"
+  }
+}
