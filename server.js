@@ -1,4 +1,4 @@
-const RESEND_KEY = process.env.RESEND_API_KEY || "re_i2oVAJaG_GV77CC9trQBF7eCNekJtybwT";
+const RESEND_KEY = process.env.RESEND_API_KEY;
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
