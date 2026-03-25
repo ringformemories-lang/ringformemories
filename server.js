@@ -63,7 +63,7 @@ const server = http.createServer(async (req, res) => {
         return res.end(JSON.stringify({ error: "Invalid email address." }));
       }
 
-      await getResend().emails.send({
+      const result = await getResend().emails.send({
         from: "Ring for Memories <no-reply@ringformemories.co.za>",
         to: CONTACT_EMAIL,
         reply_to: email,
@@ -76,6 +76,10 @@ const server = http.createServer(async (req, res) => {
           <p>${message.replace(/\n/g, "<br/>")}</p>
         `,
       });
+      if (result.error) {
+        console.error("Resend error:", JSON.stringify(result.error));
+        throw new Error(result.error.message || "Resend failed");
+      }
 
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify({ ok: true }));
