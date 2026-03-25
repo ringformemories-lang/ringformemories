@@ -1,4 +1,4 @@
-console.log("ENV CHECK — RESEND_API_KEY:", process.env.RESEND_API_KEY ? "SET (" + process.env.RESEND_API_KEY.slice(0,8) + "...)" : "NOT SET");
+const RESEND_KEY = process.env.RESEND_API_KEY || "re_i2oVAJaG_GV77CC9trQBF7eCNekJtybwT";
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3005;
 // Initialise lazily so missing key doesn't crash on startup
 let _resend = null;
 function getResend() {
-  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY);
+  if (!_resend) _resend = new Resend(RESEND_KEY);
   return _resend;
 }
 const CONTACT_EMAIL = "ringformemories@gmail.com";
@@ -140,7 +140,5 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Ring for Memories server running at http://0.0.0.0:${PORT}`);
-  if (!process.env.RESEND_API_KEY) {
-    console.warn("⚠️  RESEND_API_KEY not set — contact form emails will fail.");
-  }
+  console.log("Resend key source:", process.env.RESEND_API_KEY ? "env var" : "fallback hardcoded");
 });
