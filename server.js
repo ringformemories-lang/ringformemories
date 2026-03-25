@@ -6,7 +6,12 @@ const { Resend } = require("resend");
 
 const PORT = process.env.PORT || 3005;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialise lazily so missing key doesn't crash on startup
+let _resend = null;
+function getResend() {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY);
+  return _resend;
+}
 const CONTACT_EMAIL = "ringformemories@gmail.com";
 
 const mimeTypes = {
@@ -58,7 +63,7 @@ const server = http.createServer(async (req, res) => {
         return res.end(JSON.stringify({ error: "Invalid email address." }));
       }
 
-      await resend.emails.send({
+      await getResend().emails.send({
         from: "Ring for Memories <no-reply@ringformemories.co.za>",
         to: CONTACT_EMAIL,
         reply_to: email,
