@@ -1,4 +1,7 @@
-require("dotenv").config();
+// Load .env locally (Railway injects vars directly)
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 console.log("ENV CHECK — RESEND_API_KEY:", process.env.RESEND_API_KEY ? "SET (" + process.env.RESEND_API_KEY.slice(0,8) + "...)" : "NOT SET");
 const http = require("http");
 const fs = require("fs");
