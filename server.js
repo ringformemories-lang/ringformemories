@@ -93,7 +93,9 @@ const server = http.createServer(async (req, res) => {
   // --------------------------------------------------
   // Static file serving (with range request support for Safari video)
   // --------------------------------------------------
-  let filePath = path.join(__dirname, req.url === "/" ? "index.html" : req.url);
+  // Strip query string before resolving file path
+  const urlPath = req.url.split("?")[0];
+  let filePath = path.join(__dirname, urlPath === "/" ? "index.html" : urlPath);
 
   const ext = path.extname(filePath).toLowerCase();
   const contentType = mimeTypes[ext] || "application/octet-stream";
